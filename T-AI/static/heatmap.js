@@ -50,8 +50,14 @@ function changeOpacity() {
 // Heatmap data: 500 Points
 async function getPoints() {
   // use request library to get the data from:
-  const res = await axios.get('http://localhost:5000/api');
-  return res.data.map(o => {
+  let res;
+  try {
+    res = await axios.get('/api');
+  } catch (error) {
+    console.log(error);
+  }
+  const data = res.data.map(o => {
     return new google.maps.LatLng(o.lat, o.long);
   });
+  return data;
 }
